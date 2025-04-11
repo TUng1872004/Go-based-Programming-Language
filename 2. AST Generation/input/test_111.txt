@@ -1,0 +1,3 @@
+const Tung = STRUCT {
+            a : 1,
+            b : false}; 

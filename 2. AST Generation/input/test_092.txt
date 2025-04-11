@@ -1,0 +1,5 @@
+
+            func function(){
+                return;
+                return function() + 2;
+            } 

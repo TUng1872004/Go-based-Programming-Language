@@ -1,0 +1,9 @@
+
+        type INTERFACE interface {
+            function();
+            function() int;
+            function() [2]ID;
+            function(a int);
+            function(a int, b int);
+            function(a, b int);
+        }

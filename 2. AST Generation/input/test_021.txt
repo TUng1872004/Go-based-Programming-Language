@@ -1,0 +1,4 @@
+
+            func Tung() {
+                if(1) {return;}
+            }

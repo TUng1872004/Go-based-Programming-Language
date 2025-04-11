@@ -1,0 +1,5 @@
+
+            func Tung() {
+                var a int;
+                const a = nil;
+            }

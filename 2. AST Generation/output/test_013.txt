@@ -1,0 +1,3 @@
+Program([FuncDecl("function",[],IntType(),Block([Return(None)])),
+			FuncDecl("function",[ParamDecl("a",IntType()),ParamDecl("b",IntType())],VoidType(),Block([Return(None)]))
+		])

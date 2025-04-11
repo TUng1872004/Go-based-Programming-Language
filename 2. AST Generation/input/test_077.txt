@@ -1,0 +1,2 @@
+
+            func  (Cat c) function(a int, b [1]int) {return;}

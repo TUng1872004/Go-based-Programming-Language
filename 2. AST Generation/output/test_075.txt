@@ -1,0 +1,2 @@
+Program([MethodDecl("Cat",Id("c"),FuncDecl("function",[],VoidType(),Block([Return(None)])))
+		])

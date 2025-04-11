@@ -1,0 +1,6 @@
+
+            type Tung struct {
+                a  int;
+                b  boolean;
+                
+            }

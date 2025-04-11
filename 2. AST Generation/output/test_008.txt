@@ -1,0 +1,2 @@
+Program([ConstDecl("Tung",None,FuncCall("function",[FuncCall("a",[]),MethCall(Id("b"),"a",[IntLiteral(2),IntLiteral(3)])]))
+		])

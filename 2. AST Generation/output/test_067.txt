@@ -1,0 +1,2 @@
+Program([InterfaceType("Tung",[Prototype("Add",[IntType(),IntType(),IntType()],VoidType())])
+		])

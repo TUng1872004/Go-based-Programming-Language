@@ -1,0 +1,2 @@
+Program([FuncDecl("function",[],VoidType(),Block([Assign(FieldAccess(Id("a"),"b"),IntLiteral(1))]))
+		])

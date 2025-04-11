@@ -1,0 +1,4 @@
+
+            var Tung = 1;
+            var Tung int;
+            var Votine int = 1;

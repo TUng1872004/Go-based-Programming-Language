@@ -1,0 +1,2 @@
+
+            func function() [2]int {return;}

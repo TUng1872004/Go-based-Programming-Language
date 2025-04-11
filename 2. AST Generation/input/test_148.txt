@@ -1,0 +1,4 @@
+
+        func function () {
+            return a[2][3][4];
+        }

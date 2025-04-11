@@ -1,0 +1,2 @@
+Program([InterfaceType("INTERFACE",[Prototype("function",[],VoidType()),Prototype("function",[],IntType()),Prototype("function",[],ArrayType([IntLiteral(2)],Id("ID"))),Prototype("function",[IntType()],VoidType()),Prototype("function",[IntType(),IntType()],VoidType()),Prototype("function",[IntType(),IntType()],VoidType())])
+		])

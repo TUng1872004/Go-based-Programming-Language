@@ -1,0 +1,3 @@
+
+            varXvarY123"Hello"truefalse"HEX:"0b1013.14e-10_Identifier_42;if(for)return/*comment*/:=+=-*/&&||
+            

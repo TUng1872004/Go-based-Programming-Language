@@ -1,0 +1,2 @@
+Program([MethodDecl("Tung",Id("v"),FuncDecl("function",[ParamDecl("Tung",IntType())],VoidType(),Block([Return(None)])))
+		])

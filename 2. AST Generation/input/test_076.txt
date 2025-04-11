@@ -1,0 +1,2 @@
+
+            func  (Cat c) function(a [2]ID) {return;}

@@ -1,0 +1,2 @@
+
+            func function(a [2]ID) {return;}

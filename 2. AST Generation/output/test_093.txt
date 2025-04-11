@@ -1,0 +1,2 @@
+Program([FuncDecl("function",[],VoidType(),Block([FuncCall("function",[]),FuncCall("function",[FuncCall("function",[]),IntLiteral(2)]),MethCall(Id("a"),"function",[]),MethCall(FieldAccess(ArrayCell(Id("a"),[IntLiteral(2)]),"c"),"function",[FuncCall("function",[]),IntLiteral(2)])]))
+		])

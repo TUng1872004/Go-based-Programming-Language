@@ -1,0 +1,1 @@
+varXvarY123,"Hello",truefalse,"HEX:",0b101,3.14e-10,_Identifier_42,;,if,(,for,),return,:=,+=,-,*,/,&&,||,<EOF>

@@ -1,0 +1,4 @@
+
+            func function(){
+                a[2].b.c[2] := 1;
+            } 

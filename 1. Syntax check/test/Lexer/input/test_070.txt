@@ -1,0 +1,1 @@
+123 0xA 3.14 true false nil "MiniGo Test"

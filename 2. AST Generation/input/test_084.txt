@@ -1,0 +1,4 @@
+
+            func function(){
+                var a int;
+            } 

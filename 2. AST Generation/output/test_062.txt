@@ -1,0 +1,2 @@
+Program([StructType("Tung",[("a",IntType()),("b",BoolType())],[])
+		])

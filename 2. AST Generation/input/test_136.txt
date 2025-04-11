@@ -1,0 +1,7 @@
+
+    func function () {
+        continue;
+        break;
+        return;
+        return 1;
+    }

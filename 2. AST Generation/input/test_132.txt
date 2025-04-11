@@ -1,0 +1,4 @@
+
+    func function () {var a = 1;}
+    func function () int {var a = 1;}
+    func function () [2] ID {var a = 1;}

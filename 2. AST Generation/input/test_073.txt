@@ -1,0 +1,2 @@
+
+            func function(a int, b [1]int) {return;}

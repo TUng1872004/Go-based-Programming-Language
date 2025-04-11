@@ -1,0 +1,33 @@
+AST
+├── Decl
+│   ├── ConstDecl (dùng để test phần expr và lit)
+├── Type
+│   ├── IntType 
+│   ├── FloatType
+│   ├── BoolType
+│   ├── StringType
+│   ├── VoidType
+│   ├── ArrayType
+│   ├── StructType (này chưa dùng vì này khai báo)
+│   ├── InterfaceType (này chưa dùng vì này khai báo)
+│   ├── Id (này là TYPE của struct và Interface)
+├── BlockMember
+│   ├── Stmt
+│   │   ├── Expr
+│   │   │   ├── LHS
+│   │   │   │   ├── ArrayCell
+│   │   │   │   ├── FieldAccess
+│   │   │   ├── Literal
+│   │   │   │   ├── PrimLit
+│   │   │   │   │   ├── IntLiteral (chuyển sang hệ số 10)
+│   │   │   │   │   ├── FloatLiteral
+│   │   │   │   │   ├── StringLiteral (bỏ đi 2 dấu "" trước và sau chuỗi)
+│   │   │   │   │   ├── BooleanLiteral (truyền vào True, Flase)
+│   │   │   │   ├── StructLiteral
+│   │   │   │   ├── ArrayLiteral
+│   │   │   │   ├── NilLiteral
+│   │   │   ├── BinaryOp
+│   │   │   ├── UnaryOp
+│   │   │   ├── FuncCall
+│   │   │   ├── MethCall
+├── Program

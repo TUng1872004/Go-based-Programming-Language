@@ -1,0 +1,4 @@
+
+        func function () {
+            for(1) {return;}
+        }

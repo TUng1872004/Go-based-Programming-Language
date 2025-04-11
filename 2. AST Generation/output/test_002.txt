@@ -1,0 +1,2 @@
+Program([ConstDecl("Tung",None,FuncCall("function",[FloatLiteral(1.0),BooleanLiteral(true),BooleanLiteral(false),NilLiteral(),StringLiteral("Tung")]))
+		])

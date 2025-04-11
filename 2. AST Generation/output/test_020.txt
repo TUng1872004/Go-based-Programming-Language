@@ -1,0 +1,2 @@
+Program([FuncDecl("Tung",[],VoidType(),Block([FuncCall("function",[IntLiteral(1),IntLiteral(2)]),MethCall(ArrayCell(Id("a"),[IntLiteral(2)]),"function",[IntLiteral(1),IntLiteral(3)])]))
+		])

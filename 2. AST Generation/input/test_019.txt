@@ -1,0 +1,5 @@
+
+            func Tung() {
+                break;
+                continue;
+            }

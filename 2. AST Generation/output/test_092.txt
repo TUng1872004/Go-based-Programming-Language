@@ -1,0 +1,2 @@
+Program([FuncDecl("function",[],VoidType(),Block([Return(None),Return(BinaryOp("+", FuncCall("function",[]), IntLiteral(2)))]))
+		])

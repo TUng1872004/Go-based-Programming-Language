@@ -1,0 +1,7 @@
+
+            func function(){
+                function();
+                function(function(), 2);
+                a.function();
+                a[2].c.function(function(), 2);
+            } 
