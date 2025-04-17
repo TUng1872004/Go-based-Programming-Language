@@ -1,0 +1,1 @@
+Type Mismatch: BinaryOp("+", MethCall(Id("x"),"foo",[]), MethCall(Id("x"),"bar",[]))

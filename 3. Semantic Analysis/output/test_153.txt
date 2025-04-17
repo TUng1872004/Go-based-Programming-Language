@@ -1,0 +1,1 @@
+Type Mismatch: VarDecl("x",Id("cow"),StructLiteral("moo",[("a",IntLiteral(1))]))

@@ -34,7 +34,7 @@ class TestChecker:
         checker = StaticChecker(asttree)
         try:
             res = checker.check()
-            dest.write("VOTIEN")
+            dest.write("Success")
             # dest.write(str(list(res)))
         except StaticError as e:
             dest.write(str(e))

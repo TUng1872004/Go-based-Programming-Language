@@ -1,9 +1,9 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod, ABCMeta
 from dataclasses import dataclass
-from typing import List, Union
+from typing import List
 from Visitor import Visitor
-
+from typing import Tuple
 
 class AST(ABC):
     def __eq__(self, other): 
@@ -53,13 +53,12 @@ class Program(AST):
     
     def accept(self, v: Visitor, param):
         return v.visitProgram(self, param)
-
 @dataclass
 class ParamDecl(Decl):
     parName: str
     parType: Type
     def __str__(self):
-        return "ParDecl(" + self.parName + "," + str(self.parType) + ")"
+        return "ParamDecl(\"" + self.parName + "\"," + str(self.parType) + ")"
 
     def accept(self, v, param):
         return v.visitParamDecl(self, param)
@@ -71,7 +70,7 @@ class VarDecl(Decl,BlockMember):
     varInit : Expr # None if there is no initialization
 
     def __str__(self):
-        return "VarDecl(" + self.varName +  (("," + str(self.varType)) if self.varType else "") + ("" if self.varInit is None else (","+ str(self.varInit))) + ")"
+        return "VarDecl(\"" + self.varName +  (("\"," + str(self.varType)) if self.varType else "\", None") + (", None" if self.varInit is None else (","+ str(self.varInit))) + ")"
 
     def accept(self, v, param):
         return v.visitVarDecl(self, param)
@@ -83,11 +82,20 @@ class ConstDecl(Decl,BlockMember):
     iniExpr : Expr
 
     def __str__(self):
-        return "ConstDecl(" + self.conName  + ((","+str(self.conType)) if self.conType else "") + "," + str(self.iniExpr) + ")"
+        return "ConstDecl(\"" + self.conName + "\"," + ((+str(self.conType)) if self.conType else "None") + "," + str(self.iniExpr) + ")"
 
     def accept(self, v, param):
         return v.visitConstDecl(self, param)
 
+@dataclass
+class Block(Stmt):
+    member:List[BlockMember]
+
+    def __str__(self):
+        return "Block([" + ','.join(str(i) for i in self.member)  + "])"
+
+    def accept(self, v, param):
+        return v.visitBlock(self, param)
 @dataclass
 class FuncDecl(Decl):
     name: str
@@ -96,7 +104,7 @@ class FuncDecl(Decl):
     body: Block
 
     def __str__(self):
-        return "FuncDecl(" + self.name + ",[" +  ','.join(str(i) for i in self.params) + "]," + str(self.retType) + "," + str(self.body) + ")"
+        return "FuncDecl(\"" + self.name + "\",[" +  ','.join(str(i) for i in self.params) + "]," + str(self.retType) + "," + str(self.body) + ")"
     
     def accept(self, v, param):
         return v.visitFuncDecl(self, param)
@@ -108,12 +116,11 @@ class MethodDecl(Decl):
     fun: FuncDecl
 
     def __str__(self):
-        return "MethodDecl("+ self.receiver + "," + str(self.recType) + "," + str(self.fun) +")"
+        return "MethodDecl(\""+ self.receiver + "\"," + str(self.recType) + "," + str(self.fun) +")"
 
     def accept(self, v, param):
         return v.visitMethodDecl(self,param)
     
-
 @dataclass
 class Prototype(AST):
     name: str
@@ -121,42 +128,42 @@ class Prototype(AST):
     retType: Type # VoidType if there is no return type
 
     def __str__(self):
-        return "Prototype(" + self.name + ",[" + ','.join(str(i) for i in self.params) + "]," + str(self.retType) + ")"
+        return "Prototype(\"" + self.name + "\",[" + ','.join(str(i) for i in self.params) + "]," + str(self.retType) + ")"
 
     def accept(self, v, param):
         return v.visitPrototype(self,param)
 
 class IntType(Type):
     def __str__(self):
-        return "IntType"
+        return "IntType()"
 
     def accept(self, v, param):
         return v.visitIntType(self, param)
 
 class FloatType(Type):
     def __str__(self):
-        return "FloatType"
+        return "FloatType()"
 
     def accept(self, v, param):
         return v.visitFloatType(self, param)
 
 class BoolType(Type):
     def __str__(self):
-        return "BoolType"
+        return "BoolType()"
 
     def accept(self, v, param):
         return v.visitBoolType(self, param)
 
 class StringType(Type):
     def __str__(self):
-        return "StringType"
+        return "StringType()"
 
     def accept(self, v, param):
         return v.visitStringType(self, param)
 
 class VoidType(Type):
     def __str__(self):
-        return "VoidType"
+        return "VoidType()"
 
     def accept(self, v, param):
         return v.visitVoidType(self, param)
@@ -167,7 +174,7 @@ class ArrayType(Type):
     eleType:Type
         
     def __str__(self):
-        return "ArrayType(" + str(self.eleType) + ",[" + ','.join(str(i) for i in self.dimens) + "])"
+        return "ArrayType(" + "[" + ','.join(str(i) for i in self.dimens) + '],' +  str(self.eleType) + ")"
 
     def accept(self, v, param):
         return v.visitArrayType(self, param)
@@ -179,7 +186,7 @@ class StructType(Type):
     methods:List[MethodDecl]
         
     def __str__(self):
-        return "StructType("+ self.name + ",[" + ','.join(("(" + i + "," + str(j) + ")") for i,j in self.elements) + "],["+ ','.join(str(i) for i in self.methods) +"])"
+        return "StructType(\""+ self.name + "\",[" + ','.join(("(\"" + i + "\"," + str(j) + ")") for i,j in self.elements) + "],["+ ','.join(str(i) for i in self.methods) +"])"
 
     def accept(self, v, param):
         return v.visitStructType(self, param)
@@ -190,20 +197,10 @@ class InterfaceType(Type):
     methods:List[Prototype]
         
     def __str__(self):
-        return "InterfaceType(" + self.name + ",["+ ','.join(str(i) for i in self.methods) +"])"
+        return "InterfaceType(\"" + self.name + "\",["+ ','.join(str(i) for i in self.methods) +"])"
 
     def accept(self, v, param):
         return v.visitInterfaceType(self, param)
-
-@dataclass
-class Block(Stmt):
-    member:List[BlockMember]
-
-    def __str__(self):
-        return "Block([" + ','.join(str(i) for i in self.member)  + "])"
-
-    def accept(self, v, param):
-        return v.visitBlock(self, param)
 
 @dataclass
 class Assign(Stmt):
@@ -216,17 +213,19 @@ class Assign(Stmt):
     def accept(self, v, param):
         return v.visitAssign(self, param)
 
+
 @dataclass
 class If(Stmt):
     expr:Expr
-    thenStmt:Stmt
-    elseStmt:Stmt # None if there is no else
+    thenStmt:Block
+    elseStmt:Block # None if there is no else
 
     def __str__(self):
-        return "If(" + str(self.expr) + "," + str(self.thenStmt) + ("" if (self.elseStmt is None) else "," + str(self.elseStmt)) + ")"
+        return f"If({str(self.expr)}, {str(self.thenStmt)}, {str(self.elseStmt) if self.elseStmt else 'None'})"
 
     def accept(self, v, param):
         return v.visitIf(self, param)
+
 
 @dataclass
 class ForBasic(Stmt):
@@ -234,7 +233,7 @@ class ForBasic(Stmt):
     loop:Block
 
     def __str__(self):
-        return "For(" + str(self.cond) + "," + str(self.loop) + ")"
+        return "ForBasic(" + str(self.cond) + "," + str(self.loop) + ")"
 
     def accept(self, v, param):
         return v.visitForBasic(self, param)
@@ -247,7 +246,7 @@ class ForStep(Stmt):
     loop:Block
 
     def __str__(self):
-        return "For(" + str(self.init) + "," + str(self.cond) + "," + str(self.upda) + "," + str(self.loop) + ")"
+        return "ForStep(" + str(self.init) + "," + str(self.cond) + "," + str(self.upda) + "," + str(self.loop) + ")"
 
     def accept(self, v, param):
         return v.visitForStep(self, param)
@@ -284,19 +283,17 @@ class Return(Stmt):
     expr:Expr # None if there is no expr
 
     def __str__(self):
-        return "Return(" + ("" if (self.expr is None) else str(self.expr)) + ")"
+        return "Return(" + ("None" if (self.expr is None) else str(self.expr)) + ")"
 
     def accept(self, v, param):
         return v.visitReturn(self, param)
-
-
 
 @dataclass
 class Id(Type,LHS):
     name : str
 
     def __str__(self):
-        return  "Id(" + self.name + ")" 
+        return  "Id(\"" + self.name + "\")" 
 
     def accept(self, v, param):
         return v.visitId(self, param)
@@ -318,7 +315,7 @@ class FieldAccess(LHS):
     field:str
 
     def __str__(self):
-        return "FieldAccess(" + str(self.receiver) + "," + self.field + ")"
+        return "FieldAccess(" + str(self.receiver) + ",\"" + self.field + "\")"
 
     def accept(self, v, param):
         return v.visitFieldAccess(self, param)
@@ -330,7 +327,7 @@ class BinaryOp(Expr):
     right:Expr
 
     def __str__(self):
-        return "BinaryOp(" + str(self.left) + "," + self.op + "," +  str(self.right) + ")"
+        return "BinaryOp(\""  + self.op + "\", " + str(self.left) + ", " +  str(self.right) + ")"
 
     def accept(self, v, param):
         return v.visitBinaryOp(self, param)
@@ -341,7 +338,7 @@ class UnaryOp(Expr):
     body:Expr
 
     def __str__(self):
-        return "UnaryOp(" + self.op + "," + str(self.body) + ")"
+        return "UnaryOp(\"" + self.op + "\"," + str(self.body) + ")"
 
     def accept(self, v, param):
         return v.visitUnaryOp(self, param)
@@ -352,7 +349,7 @@ class FuncCall(Expr,Stmt):
     args:List[Expr] # [] if there is no arg 
 
     def __str__(self):
-        return "FuncCall(" + str(self.funName) + ",[" +  ','.join(str(i) for i in self.args) + "])"
+        return "FuncCall(\"" + str(self.funName) + "\",[" +  ','.join(str(i) for i in self.args) + "])"
 
     def accept(self, v, param):
         return v.visitFuncCall(self, param)
@@ -364,7 +361,7 @@ class MethCall(Expr,Stmt):
     args:List[Expr]
 
     def __str__(self):
-        return "MethodCall(" + str(self.receiver) + "," + self.metName + ",[" +  ','.join(str(i) for i in self.args) + "])"
+        return "MethCall(" + str(self.receiver) + ",\"" + self.metName + "\",[" +  ','.join(str(i) for i in self.args) + "])"
 
     def accept(self, v, param):
         return v.visitMethCall(self, param)
@@ -395,7 +392,7 @@ class StringLiteral(PrimLit):
     value:str
 
     def __str__(self):
-        return "StringLiteral(" + self.value + ")"
+        return "StringLiteral(\"" + self.value + "\")"
 
     def accept(self, v, param):
 
@@ -410,7 +407,18 @@ class BooleanLiteral(PrimLit):
     def accept(self, v, param):
         return v.visitBooleanLiteral(self, param)
 
-NestedList = Union[PrimLit, List['NestedList']]
+@dataclass
+class StructLiteral(Literal):
+    name:str
+    elements: List[Tuple[str,Expr]] # [] if there is no elements
+    
+    def __str__(self):
+        return "StructLiteral(\"" + self.name + '\",[' + ','.join(("(\""+str(i)+"\","+str(j)+")") for i,j in self.elements) + "])"
+
+    def accept(self, v, param):
+        return v.visitStructLiteral(self, param)
+
+NestedList = Literal | list['NestedList']
 def nested2Str(dat: NestedList):
     if isinstance(dat,list):
         return '[' + ','.join(nested2Str(i) for i in dat) + ']'
@@ -419,7 +427,7 @@ def nested2Str(dat: NestedList):
 
 @dataclass
 class ArrayLiteral(Literal):
-    dimens:List[Expr]
+    dimens:List[int]
     eleType: Type
     value: NestedList
 
@@ -429,26 +437,9 @@ class ArrayLiteral(Literal):
     def accept(self, v, param):
         return v.visitArrayLiteral(self, param)
 
-@dataclass
-class StructLiteral(Literal):
-    name:str
-    elements: List[Tuple[str,Expr]] # [] if there is no elements
-    
-    def __str__(self):
-        return "StructLiteral(" + self.name + ',[' + ','.join(("("+str(i)+","+str(j)+")") for i,j in self.elements) + "])"
-
-    def accept(self, v, param):
-        return v.visitStructLiteral(self, param)
-
 class NilLiteral(Literal):
     def __str__(self):
-        return "Nil"
+        return "NilLiteral()"
 
     def accept(self, v, param):
         return v.visitNilLiteral(self, param)
-
-
-
-
-
-

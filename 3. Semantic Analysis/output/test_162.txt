@@ -1,0 +1,1 @@
+Type Mismatch: MethCall(Id("b"),"print",[])

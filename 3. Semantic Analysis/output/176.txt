@@ -1,0 +1,1 @@
+Type Mismatch: FuncCall("add",[IntLiteral(1),FloatLiteral(2.0)])
